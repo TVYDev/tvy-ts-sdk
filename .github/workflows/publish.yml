@@ -1,16 +1,17 @@
 name: Publish to npm
 
 on:
-  release:
-    types: [published]
-  workflow_dispatch: # Allows manual trigger
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # For npm provenance
     steps:
       - uses: actions/checkout@v4
 
@@ -21,14 +22,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Set version from tag
-        run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
+        run: npm version ${GITHUB_REF#refs/tags/} --no-git-tag-version
 
       - name: Build
         run: pnpm build
