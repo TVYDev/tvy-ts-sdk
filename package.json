@@ -1,7 +1,7 @@
 {
   "name": "tvy-ts-sdk",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "TypeScript SDK",
   "type": "module",
   "sideEffects": false,
   "files": [
@@ -22,8 +22,16 @@
   },
   "scripts": {
     "build": "vite build",
+    "prepublishOnly": "pnpm build",
     "preview": "vite preview"
   },
+  "keywords": [
+    "typescript",
+    "utils",
+    "sdk"
+  ],
+  "author": "vannyou_tang",
+  "license": "MIT",
   "devDependencies": {
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
